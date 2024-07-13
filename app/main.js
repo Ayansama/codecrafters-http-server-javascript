@@ -17,6 +17,7 @@ console.log("Logs from your program will appear here!");
     }
     else if(reqPath.includes('/echo/')){
       const content=reqPath.split('/echo/')[1];
+      console.log(content);
       socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
     }
     else{
