@@ -14,13 +14,13 @@ console.log("Logs from your program will appear here!");
     else{
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
+    socket.end();
    })
   
-   socket.on("close", () => {
-     socket.end();
-   });
    
  });
  
 
- server.listen(4221, "localhost");
+ server.listen(4221, "localhost",()=>{
+  ProcessingInstruction.stdout.write("Listening on localhost:4221");
+ });
