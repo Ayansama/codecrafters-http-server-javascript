@@ -6,6 +6,7 @@ console.log("Logs from your program will appear here!");
 // Uncomment this to pass the first stage
  const server = net.createServer((socket) => {
   socket.on("data",(data)=>{
+    console.log(data)
     let arr=data.toString().split('\r\n');
     const statusLine=arr[0];
     const reqPath=statusLine.split(' ')[1]
