@@ -23,6 +23,7 @@ console.log("Logs from your program will appear here!");
     }
     else if(url=="/user-agent"){
       const userAgent=arr[2].split('User-Agent: ')[1];
+      console.log(userAgent)
       socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`);
     }
     else{
