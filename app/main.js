@@ -15,6 +15,7 @@ const FILES_DIR = args["directory"];
 // Uncomment this to pass the first stage
  const server = net.createServer((socket) => {
   socket.on("data",(data)=>{
+    console.log(`data: ${data}`)
     let arr=data.toString().split('\r\n');
     console.log(`arr:${arr}`)
     const url=arr[0].split(' ')[1];
