@@ -38,7 +38,9 @@ console.log("Logs from your program will appear here!");
     }
     else if(arr.startsWith('POST')){
       const content=arr[5].toString();
-      fs.writeFileSync('url',content,'utf8');
+      const directory=process.argv[3];
+      const filename=url;
+      fs.writeFileSync(`${directory}/${filename}`,`${content}`,'utf8');
       socket.write(`HTTP/1.1 201 Created\r\n\r\n`);
 
     }
