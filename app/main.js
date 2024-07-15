@@ -15,7 +15,6 @@ console.log("Logs from your program will appear here!");
     console.log(`url:${url}`)
   
 
-    console.log(url)
     if(url == '/'){
       socket.write("HTTP/1.1 200 OK\r\n\r\n");
     }
@@ -28,8 +27,8 @@ console.log("Logs from your program will appear here!");
       console.log(`userAgent:${userAgent}`)
       socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`);
     }
-    else if(statusLine.startsWith('/files')){
-      const fileName=statusLine.split('/files')[1];
+    else if(url.startsWith('/files')){
+      const fileName=url.split('/files')[1];
       const directory=process.argv[3];
       if (fs.existsSync(`${directory}/${fileName}`)){
         const content=fs.readFileSync(`${directory}/${fileName}`).toString();
