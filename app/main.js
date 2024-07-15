@@ -33,19 +33,7 @@ const FILES_DIR = args["directory"];
       console.log(`userAgent:${userAgent}`)
       socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`);
     }
-    
-    else if(url.startsWith('/files')){
-      const fileName=url.split('/files')[1];
-      const directory=process.argv[3];
-      if (fs.existsSync(`${directory}/${fileName}`)){
-        const content=fs.readFileSync(`${directory}/${fileName}`).toString();
-        console.log(`content:${content}`);
-        const res = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}\r\n`;
-        socket.write(res);
-      }
-      else{socket.write("HTTP/1.1 404 Not Found\r\n\r\n")};
-    }
-    else if(arr.startsWith("/files/")&&
+    else if(url.includes("/files/")&&
     data.toString().split(' ')[0]==="POST"){
       let fileName=url.split('/')[2];
       console.log(`filename:${fileName}`);
@@ -56,6 +44,18 @@ const FILES_DIR = args["directory"];
       socket.write(`HTTP/1.1 201 Created\r\n\r\n`);
   
     }
+    else if(url.includes("/files/")){
+      const fileName=url.split('/files')[1];
+      const directory=process.argv[3];
+      if (fs.existsSync(`${directory}/${fileName}`)){
+        const content=fs.readFileSync(`${directory}/${fileName}`).toString();
+        console.log(`content:${content}`);
+        const res = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}\r\n`;
+        socket.write(res);
+      }
+      else{socket.write("HTTP/1.1 404 Not Found\r\n\r\n")};
+    }
+    
     
     else{
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
