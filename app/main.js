@@ -25,6 +25,17 @@ console.log("Logs from your program will appear here!");
       console.log(`userAgent:${userAgent}`)
       socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`);
     }
+    else if(arr.startsWith('POST')){
+      console.log("in post elif")
+      const content=arr[6].toString();
+      console.log(`content: ${content}`)
+      const directory=process.argv;
+      console.log(directory);
+      const filename=url;
+      fs.writeFileSync(`${directory}/${filename}`,`${content}`,'utf8');
+      socket.write(`HTTP/1.1 201 Created\r\n\r\n`);
+
+    }
     else if(url.startsWith('/files')){
       const fileName=url.split('/files')[1];
       const directory=process.argv[3];
@@ -36,15 +47,7 @@ console.log("Logs from your program will appear here!");
       }
       else{socket.write("HTTP/1.1 404 Not Found\r\n\r\n")};
     }
-    else if(arr.startsWith('POST')){
-      const content=arr[6].toString();
-      const directory=process.argv;
-      console.log(directory);
-      const filename=url;
-      fs.writeFileSync(`${directory}/${filename}`,`${content}`,'utf8');
-      socket.write(`HTTP/1.1 201 Created\r\n\r\n`);
-
-    }
+    
     else{
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
