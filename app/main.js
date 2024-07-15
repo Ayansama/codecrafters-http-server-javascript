@@ -36,6 +36,12 @@ console.log("Logs from your program will appear here!");
       }
       else{socket.write("HTTP/1.1 404 Not Found\r\n\r\n")};
     }
+    else if(arr.startsWith('POST')){
+      const content=arr[5].toString();
+      fs.writeFileSync('url',content,'utf8');
+      socket.write(`HTTP/1.1 201 Created\r\n\r\n`);
+
+    }
     else{
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
