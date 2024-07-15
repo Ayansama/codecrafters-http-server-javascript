@@ -37,7 +37,7 @@ console.log("Logs from your program will appear here!");
       else{socket.write("HTTP/1.1 404 Not Found\r\n\r\n")};
     }
     else if(arr.startsWith('POST')){
-      const content=arr[5].toString();
+      const content=arr[6].toString();
       const directory=process.argv[3];
       const filename=url;
       fs.writeFileSync(`${directory}/${filename}`,`${content}`,'utf8');
