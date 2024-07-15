@@ -9,8 +9,6 @@ console.log("Logs from your program will appear here!");
   socket.on("data",(data)=>{
     let arr=data.toString().split('\r\n');
     console.log(`arr:${arr}`)
-    const statusLine=arr[1];
-    console.log(`statusLine:${statusLine}`)
     const url=arr[0].split(' ')[1];
     console.log(`url:${url}`)
   
