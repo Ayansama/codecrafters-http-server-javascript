@@ -35,10 +35,10 @@ const FILES_DIR = args["directory"];
           break;
         }
       }
-      if (encoding==="gzip"){
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding:${encoding}\r\n\r\n...`);
+      if (encoding.includes("gzip")){
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding:${encoding}\r\n\r\n`);
       }
-      else{socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);}    
+      else{socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n`);}    
       
     }
     else if(url=="/user-agent"){
