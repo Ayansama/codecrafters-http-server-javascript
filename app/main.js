@@ -26,8 +26,20 @@ const FILES_DIR = args["directory"];
       socket.write("HTTP/1.1 200 OK\r\n\r\n");
     }
     else if(url.includes('/echo/')){
-      const content=url.split('/echo/')[1];
-      socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
+      const content=url.substring(6);
+      const contentLength=content.length;
+      let encoding='';
+      for (const line of arr){
+        if (line.startsWith('Accept-Encoding: ')){
+          encoding=line.substring(17);
+          break;
+        }
+      }
+      if (encoding==="gzip"){
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding:${encoding}\r\n\r\n...`);
+      }
+      else{socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);}    
+      
     }
     else if(url=="/user-agent"){
       const userAgent=arr[2].split('User-Agent: ')[1];
