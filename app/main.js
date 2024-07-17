@@ -39,7 +39,8 @@ const FILES_DIR = args["directory"];
       if (encoding.includes("gzip")){
         const inputBuffer = Buffer.from(content, 'utf-8');
         const compressed = pako.gzip(inputBuffer);
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\nContent-Type: text/plain\r\nContent-Length:${compressed.length}\r\n${compressed}\r\n\r\n`);
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\nContent-Type: text/plain\r\nContent-Length:${compressed.length}\r\n\r\n`);
+        socket.write(compressed);
       }
       
       else{socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);}    
