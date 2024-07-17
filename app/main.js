@@ -1,5 +1,6 @@
 const net = require("net");
 const fs = require("fs");
+const pako = require('pako');
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
@@ -36,7 +37,9 @@ const FILES_DIR = args["directory"];
         }
       }
       if (encoding.includes("gzip")){
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding:gzip\r\n\r\n`);
+        const inputBuffer = Buffer.from(content, 'utf-8');
+        const compressed = pako.gzip(inputBuffer);
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding:gzip\r\nContent-Type: text/plain\r\nContent-Length:${compressed.length}\r\n${compressed}\r\n\r\n`);
       }
       
       else{socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);}    
